@@ -1,6 +1,7 @@
 'use client'
 import { useMemo } from 'react';
-import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, MarkerF, Marker, useLoadScript } from '@react-google-maps/api';
+import volleyball from '/public/assets/images/volleyball.png'
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -13,53 +14,62 @@ export default function Home() {
 
 const schools = [
   {
-    name: 'School 1',
+    name: 'Acacia Elementary',
     location: { lat: 33.882140, lng: -117.897540 },
   },
   {
-    name: 'School 2',
+    name: 'Adelanto High School',
     location: { lat: 34.531130, lng: -117.441300 },
   },
   {
-    name: 'School 3',
+    name: 'Alvarado Intermediate',
     location: { lat: 33.983500, lng: -117.895040 }
   },
   {
-    name: 'School 4',
+    name: 'Arovista Elementary',
     location: { lat: 33.912660, lng: -117.910700 }
   },
   {
-    name: 'School 5',
+    name: 'St. Joseph Catholic School',
     location: { lat: 33.879090, lng: -117.869740 }
   },
   {
-    name: 'School 6',
+    name: 'Benito Ju√°rez Elementary School',
     location: { lat: 33.8296956, lng: -117.8811014 }
   },
   {
-    name: 'School 7',
+    name: 'Benton',
     location: { lat: 33.913902983139664, lng: -117.99611449241638 }
   },
   {
-    name: 'School 8',
+    name: 'Bernardo Yorba Middle School',
     location: { lat: 33.88378, lng: -117.789 }
   },
   {
-    name: 'School 9',
+    name: 'Brea High School',
     location: { lat: 33.9322624, lng: -117.8762167 }
   },
   {
-    name: 'School 10',
+    name: 'Brea Jr High School',
     location: { lat: 33.92575171751982, lng: -117.89498159337464 }
   }
 ]
 
+
+
 function Map() {
   const center = useMemo(() => ({ lat: 33.902557373046875, lng: -117.83714294433594 }), []);
+  const labelSize = { width: 200 }
+  const labelPadding = 8;
+
+  const customIcon = {
+    url: '/assets/images/volleyball.png', // path to the icon
+    scaledSize: new window.google.maps.Size(30, 30) // size of the icon, adjust as needed
+  };
 
   return (
     <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-      <MarkerF position={center} />
+      <Marker position={center} icon={customIcon} />
       {schools.map((school, index) => (
         <MarkerF key={index} position={school.location} />
       ))}
