@@ -1,16 +1,7 @@
 'use client'
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { GoogleMap, MarkerF, Marker, useLoadScript } from '@react-google-maps/api';
 import volleyball from '/public/assets/images/volleyball.png'
-
-export default function Home() {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-  });
-
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
-}
 
 const schools = [
   {
@@ -55,24 +46,44 @@ const schools = [
   }
 ]
 
-
-
 function Map() {
   const center = useMemo(() => ({ lat: 33.902557373046875, lng: -117.83714294433594 }), []);
   const labelSize = { width: 200 }
   const labelPadding = 8;
 
-  const customIcon = {
+  const customVolleyballIcon = {
     url: '/assets/images/volleyball.png', // path to the icon
     scaledSize: new window.google.maps.Size(40, 40) // size of the icon, adjust as needed
   };
 
+  const customSchoolIcon = {
+    url: '/assets/images/school.png', // path to the icon
+    scaledSize: new window.google.maps.Size(30, 30) // size of the icon, adjust as needed
+  }
+
   return (
     <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-      <MarkerF position={center} icon={customIcon} />
+      <MarkerF position={center} icon={customVolleyballIcon} />
       {schools.map((school, index) => (
-        <MarkerF key={index} position={school.location} />
+        <MarkerF key={index} position={school.location} icon={customSchoolIcon} />
       ))}
     </GoogleMap>
   );
+}
+
+export default function Home() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  });
+
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null; // Return nothing until the component has mounted
+  if (!isLoaded) return <div>Loading...</div>;
+
+  return <Map />;
 }
