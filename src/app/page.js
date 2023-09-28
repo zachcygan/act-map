@@ -1,7 +1,6 @@
 'use client'
 import { useMemo, useState, useEffect } from 'react';
 import { GoogleMap, MarkerF, Marker, useLoadScript } from '@react-google-maps/api';
-import volleyball from '/public/assets/images/volleyball.png'
 
 const schools = [
   {
