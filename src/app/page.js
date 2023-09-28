@@ -64,12 +64,12 @@ function Map() {
 
   const customIcon = {
     url: '/assets/images/volleyball.png', // path to the icon
-    scaledSize: new window.google.maps.Size(30, 30) // size of the icon, adjust as needed
+    scaledSize: new window.google.maps.Size(40, 40) // size of the icon, adjust as needed
   };
 
   return (
     <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
-      <Marker position={center} icon={customIcon} />
+      <MarkerF position={center} icon={customIcon} />
       {schools.map((school, index) => (
         <MarkerF key={index} position={school.location} />
       ))}
